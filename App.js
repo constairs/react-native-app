@@ -1,43 +1,35 @@
 import React from 'react';
 import { StyleSheet, TextInput, View, Button } from 'react-native';
 import { NativeRouter, Route, Link } from "react-router-native";
+import { ConnectedRouter } from 'connected-react-router';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { AuthPage } from './containers/AuthPage';
 import { LoginPage } from './containers/LoginPage';
 import { UserPage } from './containers/UserPage';
+import { StartPage } from './containers/StartPage';
 import { configureStore } from './redux/store';
 import { rootSaga } from './redux/sagas';
+import { history } from './redux/store';
 
 export const store = configureStore();
 
-store.runSaga(rootSaga);
+store.store.runSaga(rootSaga);
 
 export default class App extends React.Component {
-  state = {
-    userLogin: '',
-    userPassword: '',
-    logged: false,
-  }
-
-  userLogin = () => {
-    this.setState({
-      logged: true,
-    });
-    const data = [
-      this.state.userLogin,
-      this.state.userPassword
-    ];
-  }
-
   render() {
-    const { userLogin, userPassword } = this.state;
     return (
-      <Provider store={store}>
-        <NativeRouter>
-            <View style={styles.container}>
-              <Route exact path="/" component={LoginPage} />
-              <Route exact path="/user" component={UserPage} />
-            </View>
-        </NativeRouter>
+      <Provider store={store.store}>
+        <PersistGate loading={null} persistor={store.persistor}>
+          <ConnectedRouter history={history}>
+              <View style={styles.container}>
+                <Route exact path="/" component={StartPage} />
+                <Route exact path="/auth" component={AuthPage} />
+                <Route exact path="/login" component={LoginPage} />
+                <Route exact path="/user" component={UserPage} />
+              </View>
+          </ConnectedRouter>
+        </PersistGate>
       </Provider>
     );
   }

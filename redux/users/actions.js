@@ -19,7 +19,7 @@ export const userCreateRequest = userData => ({
 });
 export const userCreateSuccessed = createResponse => ({
   type: TYPES.USER_CREATE_SUCCESSED,
-  payload: loginResponse
+  payload: createResponse
 });
 export const userCreateFailed = error => ({
   type: TYPES.USER_CREATE_FAILED,

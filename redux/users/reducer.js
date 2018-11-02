@@ -15,7 +15,9 @@ const userLoginRequest = () => assoc('userFetching', true);
 const userLoginSuccessed = loginResponse => pipe(
   assoc('userFetching', false),
   assoc('logged', true),
-  assoc('email', loginResponse.email)
+  assoc('email', loginResponse.user.email),
+  // assoc('photoURL', loginResponse.user.photoURL),
+  // assoc('displayName', loginResponse.user.displayName),
 );
 const userLoginFailed = error => pipe(
   assoc('userFetching', false),
@@ -23,10 +25,10 @@ const userLoginFailed = error => pipe(
 );
 
 const userCreateRequest = () => assoc('userFetching', true);
-const userCreateSuccessed = loginResponse => pipe(
+const userCreateSuccessed = createResponse => pipe(
   assoc('userFetching', false),
   assoc('logged', true),
-  assoc('email', loginResponse.email)
+  assoc('email', createResponse.user.email)
 );
 const userCreateFailed = error => pipe(
   assoc('userFetching', false),

@@ -9,7 +9,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { bindActionCreators } from 'redux';
-import { userLoginRequest } from '../../redux/users/actions';
+import { userCreateRequest } from '../../redux/users/actions';
 
 
 class Page extends React.Component {
@@ -19,7 +19,7 @@ class Page extends React.Component {
     logged: false,
   }
   
-  userLogin = () => {
+  userAuth = () => {
     this.setState({
       logged: true,
     });
@@ -27,7 +27,7 @@ class Page extends React.Component {
       this.state.userLogin,
       this.state.userPassword
     ];
-    this.props.userLoginRequest(data);
+    this.props.userCreateRequest(data);
   }
 
   render() {
@@ -49,11 +49,11 @@ class Page extends React.Component {
         />
         <TouchableOpacity
           style={styles.btn}
-          onPress={this.userLogin}
+          onPress={this.userAuth}
           disabled={!userLogin && !userPassword}
         >
           <Text style={styles.btnText}>
-            Login
+            Auth
           </Text>
         </TouchableOpacity>
       </View>
@@ -91,9 +91,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export const LoginPage = connect(
+export const AuthPage = connect(
   state => ({ user: state.users }),
   dispatch => ({
-    userLoginRequest: bindActionCreators(userLoginRequest, dispatch)
+    userCreateRequest: bindActionCreators(userCreateRequest, dispatch)
   })
 )(Page);

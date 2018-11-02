@@ -17,12 +17,9 @@ import {
 
 export function* userLoginSaga(action) {
   try {
-    // const loginResponse = yield call(createUserWithEmailAndPassword, ...action.payload);
-    const loginResponse = {
-      email: action.payload[0],
-    };
-    yield put(userLoginSuccessed(loginResponse));
+    const loginResponse = yield call(signInWithEmailAndPassword, ...action.payload);
     yield put(push('/user'));
+    yield put(userLoginSuccessed(loginResponse));
   } catch (error) {
     yield put(userLoginFailed(error.message));
   }
@@ -30,10 +27,7 @@ export function* userLoginSaga(action) {
 
 export function* userCreateSaga(action) {
   try {
-    // const createResponse = {
-    //   email: action.payload[0],
-    // };
-    const createResponse = yield call(signInWithEmailAndPassword, ...action.payload);
+    const createResponse = yield call(createUserWithEmailAndPassword, ...action.payload);
     yield put(userCreateSuccessed(createResponse));
     yield put(push('/user'));
   } catch (error) {

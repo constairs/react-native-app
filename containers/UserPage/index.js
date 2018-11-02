@@ -1,38 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, TextInput, Text, View, Button } from 'react-native';
+import { StyleSheet, TextInput, Text, View, Button, Image } from 'react-native';
+import { Link } from "react-router-native";
 import { bindActionCreators } from 'redux';
+import { UserProfile } from '../../components/UserProfile';
 import { userLoginRequest } from '../../redux/users/actions';
 
 class Page extends React.Component {
-  state = {
-    userLogin: '',
-    userPassword: '',
-    logged: false,
-  }
-  
-  userLogin = () => {
-    this.setState({
-      logged: true,
-    });
-    const data = [
-      this.state.userLogin,
-      this.state.userPassword
-    ];
-    this.props.userLoginRequest(data);
-  }
-
   render() {
-    const { logged, email } = this.props.user;
+    const { logged, email, photoURL } = this.props.user;
+    const img = {uri: photoURL || 'https://www.gstatic.com/mobilesdk/160503_mobilesdk/logo/2x/firebase_28dp.png'};
     return (
       <View style={styles.container}>
-        {
-          logged ?
-          <Text>
-            {email}
-          </Text>
-          : null
-        }
+        <UserProfile {...this.props.user} />
       </View>
     );
   }
@@ -46,23 +26,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 40
   },
-  textinput: {
-    height: 40,
-    borderRadius: 4,
-    backgroundColor: '#f0f0f0',
-    padding: 4,
-    borderWidth: 1,
-    width: 200,
-    marginBottom: 20
+  nav: {
+    flexDirection: 'row',
+    height: 100,
   },
-  button: {
-    backgroundColor: '#61dafb',
-    borderRadius: 4,
-    color: '#fff'
+  navLink: {
+    color: '#fff',
+    fontSize: 16,
   }
 });
 
 export const UserPage = connect(
-  state => ({ user: state.user }),
+  state => ({ user: state.users }),
   dispatch => ({ userLoginRequest: bindActionCreators(userLoginRequest, dispatch) })
 )(Page);
