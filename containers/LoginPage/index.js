@@ -9,7 +9,10 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { bindActionCreators } from 'redux';
-import { userLoginRequest } from '../../redux/users/actions';
+import {
+  userLoginRequest
+} from '../../redux/users/actions';
+import { history } from '../../redux/store';
 
 
 class Page extends React.Component {
@@ -43,10 +46,16 @@ class Page extends React.Component {
         />
         <TextInput
           style={styles.textinput}
+          type="password"
           onChangeText={(text) => this.setState({userPassword: text})}
           value={userPassword}
           placeholder='enter password'
         />
+        <TouchableOpacity onPress={() => {history.push('/passwordReset')}}>
+          <Text>
+            Forget password?
+          </Text>
+        </TouchableOpacity>
         <TouchableOpacity
           style={styles.btn}
           onPress={this.userLogin}

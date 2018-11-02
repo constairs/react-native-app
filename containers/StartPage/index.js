@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Link } from "react-router-native";
 import { UserProfile } from '../../components/UserProfile';
+import { bindActionCreators } from 'redux';
+import { userLogoutRequest } from '../../redux/users/actions'
 
 class Page extends React.Component {
   render() {
@@ -14,25 +16,8 @@ class Page extends React.Component {
         </Text>
         {
           logged ?
-          <UserProfile {...this.props.user} />
+          <UserProfile {...this.props.user} onLogout={() => {this.props.userLogoutRequest()}} />
           :
-          <View>
-            <TouchableOpacity
-              style={styles.button}
-            >
-              <Link to="/login" >
-                <Text style={styles.buttonText}> Login </Text>
-              </Link>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.buttonGhost}
-            >
-              <Link to="/auth" >
-                <Text style={styles.buttonGhostText}> Auth </Text>
-              </Link>
-            </TouchableOpacity>
-          </View>
-        }
           <View style={styles.buttons}>
             <TouchableOpacity
               style={styles.button}
@@ -49,6 +34,7 @@ class Page extends React.Component {
               </Link>
             </TouchableOpacity>
           </View>
+        }
       </View>
     );
   }
@@ -98,5 +84,6 @@ const styles = StyleSheet.create({
 });
 
 export const StartPage = connect(
-  state => ({ user: state.users })
+  state => ({ user: state.users }),
+  dispatch => ({ userLogoutRequest: bindActionCreators(userLogoutRequest, dispatch) })
 )(Page);

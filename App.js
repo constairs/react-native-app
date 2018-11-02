@@ -8,6 +8,9 @@ import { AuthPage } from './containers/AuthPage';
 import { LoginPage } from './containers/LoginPage';
 import { UserPage } from './containers/UserPage';
 import { StartPage } from './containers/StartPage';
+import { EmailUpdate } from './containers/EmailUpdate';
+import { PasswordReset } from './containers/PasswordReset';
+import { PasswordUpdate } from './containers/PasswordUpdate';
 import { configureStore } from './redux/store';
 import { rootSaga } from './redux/sagas';
 import { history } from './redux/store';
@@ -27,6 +30,9 @@ export default class App extends React.Component {
                 <Route exact path="/auth" component={AuthPage} />
                 <Route exact path="/login" component={LoginPage} />
                 <Route exact path="/user" component={UserPage} />
+                <Route exact path="/passwordReset" component={PasswordReset} />
+                <Route exact path="/passwordUpdate" component={PasswordUpdate} />
+                <Route exact path="/emailUpdate" component={EmailUpdate} />
               </View>
           </ConnectedRouter>
         </PersistGate>

@@ -1,5 +1,13 @@
 import React from 'react';
-import { StyleSheet, TextInput, Text, View, Button, Image } from 'react-native';
+import {
+  StyleSheet,
+  TextInput,
+  Text,
+  View,
+  Button,
+  Image,
+  TouchableOpacity
+} from 'react-native';
 import { Link } from "react-router-native";
 
 export class UserProfile extends React.Component {
@@ -8,20 +16,24 @@ export class UserProfile extends React.Component {
     const img = {uri: photoURL || 'https://www.gstatic.com/mobilesdk/160503_mobilesdk/logo/2x/firebase_28dp.png'};
     return (
       <View style={styles.container}>
-        <View style={styles.nav}>
-          <Link to="/">
-            <Text style={styles.navLink}>Home</Text>
-          </Link>
-        </View>
         {
           logged ?
           <View style={styles.userProfile}>
             <View style={styles.imgContainer}>
               <Image style={styles.userPhoto} source={img} />
             </View>
-            <Text style={styles.userName}>
-              {email}
-            </Text>
+            <View style={styles.userInfo}>
+              <Link to="/user">
+                <Text  style={styles.userTitle}>
+                  {email}
+                </Text>
+              </Link>
+              <TouchableOpacity style={styles.smBtn} onPress={() => {this.props.onLogout()}}>
+                <Text style={styles.smBtnText}>
+                  Logout
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
           : null
         }
@@ -38,14 +50,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 40
   },
-  nav: {
-    flexDirection: 'row',
-    height: 100,
-  },
-  navLink: {
-    color: '#fff',
-    fontSize: 16,
-  },
   textinput: {
     height: 40,
     borderRadius: 4,
@@ -58,7 +62,6 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#61dafb',
     borderRadius: 4,
-    color: '#fff'
   },
   imgContainer: {
     width: 40,
@@ -76,9 +79,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
-  userName: {
+  userInfo: {
+    flex: 0.85, 
+  },
+  userTitle: {
     color: '#fff',
-    flex: 0.85,
     fontSize: 18,
+  },
+  smBtn: {
+    backgroundColor: '#61dafb',
+    borderRadius: 4,
+    padding: 4,
+    width: 80,
+    marginTop: 5,
+  },
+  smBtnText: {
+    color: '#fff',
+    textAlign: 'center'
   }
 });

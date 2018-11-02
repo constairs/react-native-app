@@ -8,53 +8,38 @@ import {
   Button,
   TouchableOpacity
 } from 'react-native';
+import { Link } from "react-router-native";
 import { bindActionCreators } from 'redux';
-import { userCreateRequest } from '../../redux/users/actions';
-
+import { UserProfile } from '../../components/UserProfile';
+import { BackBtn } from '../../components/BackBtn';
+import { Nav } from '../Nav';
+import {
+  updateEmailRequest
+} from '../../redux/users/actions';
 
 class Page extends React.Component {
   state = {
-    userLogin: '',
-    userPassword: '',
-    logged: false,
-  }
-  
-  userAuth = () => {
-    this.setState({
-      logged: true,
-    });
-    const data = [
-      this.state.userLogin,
-      this.state.userPassword
-    ];
-    this.props.userCreateRequest(data);
-  }
-
+    userEmail: ''
+  };
   render() {
-    const { userLogin, userPassword } = this.state;
-    const { logged, email } = this.props.user;
+    const { userEmail } = this.state;
     return (
       <View style={styles.container}>
-        <TextInput
-          style={styles.textinput}
-          onChangeText={(text) => this.setState({userLogin: text})}
-          value={userLogin}
-          placeholder='enter email'
-        />
+        <BackBtn />
         <TextInput
           style={styles.textinput}
           type="password"
-          onChangeText={(text) => this.setState({userPassword: text})}
-          value={userPassword}
+          onChangeText={(text) => this.setState({userEmail: text})}
+          value={userEmail}
           placeholder='enter password'
         />
         <TouchableOpacity
           style={styles.btn}
-          onPress={this.userAuth}
-          disabled={!userLogin && !userPassword}
+          onPress={() => {this.props.updateEmailRequest(userEmail)}}
+          disabled={!userEmail}
         >
           <Text style={styles.btnText}>
-            Auth
+            Change email
           </Text>
         </TouchableOpacity>
       </View>
@@ -92,9 +77,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export const AuthPage = connect(
+export const EmailUpdate = connect(
   state => ({ user: state.users }),
   dispatch => ({
-    userCreateRequest: bindActionCreators(userCreateRequest, dispatch)
+    updateEmailRequest: bindActionCreators(updateEmailRequest, dispatch)
   })
 )(Page);

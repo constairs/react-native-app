@@ -42,7 +42,7 @@ export function reAuth() {
   });
 }
 
-export function signOut() {
+export function logout() {
   return new Promise((resolve, reject) => {
     firebase.auth().signOut().then(() => {
       resolve('Logout successed!');
@@ -100,7 +100,7 @@ export function updateEmail(email) {
 export function sendVerification() {
   return new Promise((resolve, reject) => {
     const user = firebase.auth().currentUser;
-
+    
     user.sendEmailVerification().then(() => {
       resolve('Email успешно отправлен');
     }).catch((error) => {
