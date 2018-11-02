@@ -50,6 +50,19 @@ export const userDeleteFailed = error => ({
   payload: error
 });
 
+export const userUpdateRequest = updateUserData => ({
+  type: TYPES.USER_UPDATE_REQUEST,
+  payload: updateUserData
+});
+export const userUpdateSuccessed = logoutResponse => ({
+  type: TYPES.USER_UPDATE_SUCCESSED,
+  payload: logoutResponse
+});
+export const userUpdateFailed = error => ({
+  type: TYPES.USER_UPDATE_FAILED,
+  payload: error
+});
+
 export const updateEmailRequest = newEmail => ({
   type: TYPES.UPDATE_EMAIL_REQUEST,
   payload: newEmail
@@ -76,8 +89,9 @@ export const updatePasswordFailed = error => ({
   payload: error
 });
 
-export const resetPaswordRequest = () => ({
-  type: TYPES.RESET_PASSWORD_REQUEST
+export const resetPaswordRequest = email => ({
+  type: TYPES.RESET_PASSWORD_REQUEST,
+  payload: email
 });
 export const resetPaswordSuccessed = resetResponse => ({
   type: TYPES.RESET_PASSWORD_SUCCESSED,

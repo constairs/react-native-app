@@ -40,10 +40,11 @@ class Page extends React.Component {
           onChangeText={(text) => this.setState({userLogin: text})}
           value={userLogin}
           placeholder='enter email'
+          textContentType="emailAddress"
         />
         <TextInput
           style={styles.textinput}
-          type="password"
+          textContentType="password"
           onChangeText={(text) => this.setState({userPassword: text})}
           value={userPassword}
           placeholder='enter password'

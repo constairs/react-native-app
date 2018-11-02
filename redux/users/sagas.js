@@ -9,8 +9,10 @@ import {
   USER_CREATE_REQUEST,
   USER_LOGOUT_REQUEST,
   USER_DELETE_REQUEST,
+  USER_UPDATE_REQUEST,
   UPDATE_EMAIL_REQUEST,
-  UPDATE_PASSWORD_REQUEST
+  UPDATE_PASSWORD_REQUEST,
+  RESET_PASSWORD_REQUEST
 } from './types';
 import {
   userLoginSuccessed,
@@ -25,13 +27,18 @@ import {
   updateEmailSuccessed,
   updateEmailFailed,
   updatePasswordSuccessed,
-  updatePasswordFailed
+  updatePasswordFailed,
+  userUpdateSuccessed,
+  userUpdateFailed,
+  resetPaswordSuccessed,
+  resetPaswordFailed
 } from './actions';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   logout,
   deleteProfile,
+  updateProfile,
   updateEmail,
   sendVerification,
   updatePassword,
@@ -79,6 +86,16 @@ export function* userDeleteSaga() {
   }
 }
 
+export function* userUpdateSaga(action) {
+  try {
+    const updateResponse = yield call(updateProfile, ...action.payload);
+    yield put(userUpdateSuccessed(updateResponse));
+    yield put(push('/user'));
+  } catch (error) {
+    yield put(userUpdateFailed(error.message));
+  }
+}
+
 export function* updateEmailSaga({ payload }) {
   try {
     const updateRes = yield call(updateEmail, payload);
@@ -99,11 +116,23 @@ export function* updatePasswordSaga({ payload }) {
   }
 }
 
+export function* resetPasswordSaga({ payload }) {
+  try {
+    const resetResponse = yield call(resetPassword, payload);
+    yield put(resetPaswordSuccessed(resetResponse));
+    yield put(push('/'));
+  } catch (error) {
+    yield put(resetPaswordFailed(error.message));
+  }
+}
+
 export function* userSagas() {
   yield takeLatest(USER_LOGIN_REQUEST, userLoginSaga);
   yield takeLatest(USER_CREATE_REQUEST, userCreateSaga);
   yield takeLatest(USER_LOGOUT_REQUEST, userLogoutSaga);
   yield takeLatest(USER_DELETE_REQUEST, userDeleteSaga);
+  yield takeLatest(USER_UPDATE_REQUEST, userUpdateSaga);
   yield takeLatest(UPDATE_EMAIL_REQUEST, updateEmailSaga);
   yield takeLatest(UPDATE_PASSWORD_REQUEST, updatePasswordSaga);
+  yield takeLatest(RESET_PASSWORD_REQUEST, resetPasswordSaga);
 }

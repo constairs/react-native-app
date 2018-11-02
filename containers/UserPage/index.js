@@ -35,6 +35,14 @@ class Page extends React.Component {
         <View style={styles.buttons}>
           <TouchableOpacity
             style={styles.button}
+            onPress={() => {history.push('/profileUpdate')}}
+          >
+            <Text style={styles.buttonText}>
+              Update Profile
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
             onPress={() => {this.props.userDeleteRequest()}}
           >
             <Text style={styles.buttonText}>

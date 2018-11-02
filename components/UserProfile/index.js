@@ -12,7 +12,7 @@ import { Link } from "react-router-native";
 
 export class UserProfile extends React.Component {
   render() {
-    const { logged, email, photoURL } = this.props;
+    const { logged, email, photoURL, displayName } = this.props;
     const img = {uri: photoURL || 'https://www.gstatic.com/mobilesdk/160503_mobilesdk/logo/2x/firebase_28dp.png'};
     return (
       <View style={styles.container}>
@@ -25,7 +25,7 @@ export class UserProfile extends React.Component {
             <View style={styles.userInfo}>
               <Link to="/user">
                 <Text  style={styles.userTitle}>
-                  {email}
+                  {displayName || email}
                 </Text>
               </Link>
               <TouchableOpacity style={styles.smBtn} onPress={() => {this.props.onLogout()}}>

@@ -28,7 +28,7 @@ class Page extends React.Component {
         <BackBtn />
         <TextInput
           style={styles.textinput}
-          type="password"
+          textContentType="password"
           onChangeText={(text) => this.setState({userPassword: text})}
           value={userPassword}
           placeholder='enter password'

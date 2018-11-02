@@ -14,32 +14,39 @@ import { UserProfile } from '../../components/UserProfile';
 import { BackBtn } from '../../components/BackBtn';
 import { Nav } from '../Nav';
 import {
-  updateEmailRequest
+  userUpdateRequest
 } from '../../redux/users/actions';
 
 class Page extends React.Component {
   state = {
-    userEmail: ''
+    userName: '',
+    profileUrl: ''
   };
   render() {
-    const { userEmail } = this.state;
+    const { userName, profileUrl } = this.state;
     return (
       <View style={styles.container}>
         <BackBtn />
         <TextInput
           style={styles.textinput}
-          onChangeText={(text) => this.setState({userEmail: text})}
-          value={userEmail}
-          placeholder='enter email'
-          textContentType="emailAddress"
+          onChangeText={(text) => this.setState({userName: text})}
+          value={userName}
+          placeholder='enter nickname'
+          textContentType="nickname"
+        />
+        <TextInput
+          style={styles.textinput}
+          onChangeText={(text) => this.setState({profileUrl: text})}
+          value={profileUrl}
+          placeholder='enter image url'
+          textContentType="URL"
         />
         <TouchableOpacity
           style={styles.btn}
-          onPress={() => {this.props.updateEmailRequest(userEmail)}}
-          disabled={!userEmail}
+          onPress={() => {this.props.userUpdateRequest([userName, profileUrl])}}
         >
           <Text style={styles.btnText}>
-            Change email
+            Update profile
           </Text>
         </TouchableOpacity>
       </View>
@@ -77,9 +84,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export const EmailUpdate = connect(
+export const ProfileUpdate = connect(
   state => ({ user: state.users }),
   dispatch => ({
-    updateEmailRequest: bindActionCreators(updateEmailRequest, dispatch)
+    userUpdateRequest: bindActionCreators(userUpdateRequest, dispatch)
   })
 )(Page);

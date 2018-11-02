@@ -22,16 +22,16 @@ class Page extends React.Component {
     email: ''
   };
   render() {
-    const { userPassword } = this.state;
+    const { email } = this.state;
     return (
       <View style={styles.container}>
         <BackBtn />
         <TextInput
           style={styles.textinput}
-          type="password"
           onChangeText={(text) => this.setState({email: text})}
           value={email}
-          placeholder='enter password'
+          textContentType="emailAddress"
+          placeholder='enter email'
         />
         <TouchableOpacity
           style={styles.btn}
